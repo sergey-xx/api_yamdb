@@ -1,34 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+
+from .validators import validate_username
 
 
 class User(AbstractUser):
-    """Класс пользователей."""
+    """Модель данных для пользователей."""
     class Role(models.TextChoices):
         """Роли пользователей."""
         ADMIN = 'admin', 'Администратор'
-        MODERATOR = 'moderator', 'Администратор'
-        USER = 'user', 'Администратор'
-
-    # Валидация данных
-    username_regex = r'[\w.@+-]+$'
-    username_validator = RegexValidator(
-        regex=username_regex,
-        message='Username может содержать только буквы, цифры и @/./+/-/_',
-        code='invalid_username'
-    )
+        MODERATOR = 'moderator', 'Модератор'
+        USER = 'user', 'Пользователь'
 
     username = models.CharField(
+        'Никнейм',
         max_length=150,
         unique=True,
-    )
-    confirmation_code = models.CharField(max_length=5, blank=True)
-    email = models.EmailField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)
-    bio = models.TextField(blank=True)
+        validators=[validate_username, ])
+    confirmation_code = models.CharField(
+        'Код подтверждения',
+        max_length=5,
+        blank=True)
+    email = models.EmailField('Почта', max_length=254, unique=True)
+    first_name = models.CharField('Имя', max_length=150, blank=True)
+    last_name = models.CharField('Фамилия', max_length=150, blank=True)
+    bio = models.TextField('Биография', blank=True)
     role = models.CharField(
+        'Роль',
         max_length=25,
         choices=Role.choices,
         default=Role.USER
@@ -37,6 +35,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email', ]
 
     class Meta:
+        verbose_name = "пользователя"
+        verbose_name_plural = "Пользователи"
         unique_together = ('username', 'email')
 
     @property
