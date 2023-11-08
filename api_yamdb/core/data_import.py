@@ -120,3 +120,13 @@ def data_import(request):
     review_import()
     comment_import()
     return HttpResponse('Данные импортированы!')
+
+
+def offline_import():
+    category_import()
+    genre_import()
+    title_import()
+    genre_title_import()
+    review_import()
+    comment_import()
+    print('Данные импортированы!')
