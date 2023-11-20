@@ -10,9 +10,53 @@
 
 ## Разворачивание проекта.
 - Клонируйте репозиторий.
-- Установите виртуальное окружение.
-- Установите зависимости (зависимости находятся в файле requiirements.txt)
-- Перейдите в папку yatube_api и выполните команду "python manage.py runserver"
+```bash
+git clone git@github.com:sergey-xx/api_yamdb.git
+```
+
+### Backend
+**(Windows)**
+
+В папке /backend создать виртуальное окружение:
+```shell
+> python -m venv venv
+```
+Активировать виртуальное окружение:
+```shell
+> source venv/Scripts/Activate
+```
+
+**(Linux)**
+
+В папке /backend создать виртуальное окружение:
+  
+```bash
+$ python3 -m venv venv
+```
+Активировать виртуальное окружение:
+```bash
+$ source venv/bin/activate
+```
+
+Далее
+
+Установить зависимости:
+```bash
+$ pip install -r requirements.py
+```
+Выполнить миграции БД:
+```bash
+$ python manage.py migrate
+```
+Для доступа в админ-панель создайте супер-пользователя:
+```bash
+$ python manage.py createsuperuser
+```
+
+Запустить проект:
+```bash
+$ python manage.py runserver
+```
 
 ## Документация
 После разворачивания проекта полная документация будет доступна по адресу
@@ -38,17 +82,15 @@ http://127.0.0.1:8000/import/
 http://127.0.0.1:8000/api/v1/auth/signup/ 
 
 отправить подобный запрос:
-
+```json
 {
-
 "email": "user@example.com",
-
 "username": "user"
-
 }
-
+```
 Пользователь будет создан и вам на почту* придет код подтверждения для 
-получения токена. 
+получения токена.
+
 *Сейчас в проекте отправка писем настроена в тестовом режиме и письма
 сохраняются в папку "sent_emails"
 
@@ -58,15 +100,13 @@ http://127.0.0.1:8000/api/v1/auth/signup/
 http://127.0.0.1:8000/api/v1/auth/token/ 
 
 отправить имя пользователя и токен:
+```json
 
 {
-
 "username": "string",
-
 "confirmation_code": "string"
-
 }
-
+```
 В ответ вам придет уникальный токен пользователя.
 
 ## Авторы
